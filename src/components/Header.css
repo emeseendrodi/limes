@@ -1,0 +1,8 @@
+.header--container{
+    height: 100px;
+    background-color: #09224C;
+    color: white;
+
+    display: flex;
+    padding: 10px;
+}
