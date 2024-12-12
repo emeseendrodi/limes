@@ -1,19 +1,38 @@
 import React from "react";
 import "./Header.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+
+import { NavLink } from "react-router-dom";
+
 
 export default function Header(){
+
     return(
        
-            <div className="header--container">
-                <img src="public/pte-logo.png" width={"95px"} height={"95px"}/>
-                <h1>Limes</h1>
-                <FontAwesomeIcon icon={faArrowRight} />
+            <header>
+                <div>
+                    <img src="public/pte-logo.png" width={"95px"} height={"95px"}/>
+                    <img src="public/limes-logo.png" width={"95px"}/>
+                </div>
+                
+                
                 <nav>
-                    
+                    <NavLink
+                        to="/tananyag"
+                    >Tananyag
+                    </NavLink>
+
+                    <NavLink
+                        to="/probazh"
+        
+                    >Próba ZH
+                    </NavLink>
+                    <NavLink
+                        to="/profil"
+        
+                    >Profil
+                    </NavLink>
                 </nav>
-            </div>
+            </header>
        
     )
 }

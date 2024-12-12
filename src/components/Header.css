@@ -1,8 +1,26 @@
-.header--container{
-    height: 100px;
+header{
+    height: 95px;
     background-color: #09224C;
     color: white;
-
     display: flex;
-    padding: 10px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 150px;
+    
+}
+
+header img{
+    padding-right: 20px;
+}
+
+a{
+    color: white;
+    font-size: large;
+    text-decoration: none;
+    padding: 0 20px;
+}
+
+a:hover{
+    border-bottom: 4px solid white;
+    color: rgba(255,255,255, 0.75);
 }
