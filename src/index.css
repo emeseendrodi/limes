@@ -1,6 +1,9 @@
 body{
     margin: 0px;
     padding: 0px;
-   height: auto;
+    height: auto;
     font-family: "Montserrat", serif;
+}
+main{
+    height: 100%;
 }

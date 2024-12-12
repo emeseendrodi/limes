@@ -1,3 +1,11 @@
 footer{
     background-color: #999999;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-top: auto;
+}
+p{
+    margin: 0;
 }
