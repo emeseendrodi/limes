@@ -1,0 +1,46 @@
+.home--hero-section{
+    margin:100px 300px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+.home--hero-textbox{
+    background-color: #09224C;
+    color: white;
+    font-style: italic;
+    text-transform: uppercase;
+    
+    height: 200px;
+    max-width: 500px;
+    border-radius: 20px;
+    box-shadow: -8px 10px 6px #999;
+
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.home--hero-textbox h1, .home--hero-textbox h2{
+    font-weight: 500;
+}
+
+.home--userlogin{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.home--login{
+    background-color: #008776;
+    color: white;
+    width: 120px;
+    text-align: center;
+
+    margin: 20px;
+    padding: 15px 30px;
+
+    border-radius: 20px;
+}

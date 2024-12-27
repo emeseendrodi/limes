@@ -10,8 +10,8 @@ export default function Header(){
        
             <header>
                 <div>
-                    <img src="public/pte-logo.png" width={"95px"} height={"95px"}/>
-                    <img src="public/limes-logo.png" width={"95px"}/>
+                    <img src="public/pte-logo.png" width={"80px"} height={"80px"}/>
+                    <img src="public/limes-logo.png" width={"140px"} className="limes-logo"/>
                 </div>
                 
                 
