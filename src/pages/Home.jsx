@@ -1,5 +1,6 @@
 import React from "react";
-import "./pages-css/Home.css"
+import "./styles/Home.css"
+import { Link } from "react-router-dom";
 
 export default function Home(){
 
@@ -14,11 +15,11 @@ export default function Home(){
 
             <div className="home--userlogin">
                 <div className="home--login">
-                    <p>Regisztráció</p>
+                    <Link className="home--link" to="/regisztracio">Regisztráció</Link>
                 </div>
 
                 <div className="home--login">
-                    <p>Bejelentkezés</p>
+                  <Link className="home--link" to="/bejelentkezes">Bejelentkezés</Link>
                 </div>
             </div>
                 
