@@ -1,0 +1,31 @@
+.tananyag-box{
+    background-color: #09224C;
+    opacity: 80%;
+    color: white;
+    
+
+    margin: 20px 10px;
+    padding: 10px 20px;
+
+    border-radius: 20px;
+    
+}
+
+.tananyag-box ul{
+    list-style: none;
+    
+}
+
+.tananyag-box h2{
+    font-weight: 500;
+}
+
+
+@media (min-width: 768px) {
+
+    .tananyag-box{
+        width: 70vw;
+        margin: 20px auto;
+    }
+    
+}

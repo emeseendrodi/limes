@@ -1,11 +1,15 @@
-footer{
-    background-color: #999999;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
+/* Footer */
+footer {
+    background-color: grey;
+    color: white;
     text-align: center;
-    margin-top: auto;
+    padding: 10px;
+    margin-top: auto; /* Ez biztosítja, hogy a footer mindig az oldal alján legyen */
 }
-p{
+
+/* Például, ha van egyéb stílus, akkor a footer tartalma */
+footer p {
     margin: 0;
+    padding: 0;
+    font-size: 11px;
 }

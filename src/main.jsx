@@ -7,6 +7,8 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import Tananyag from './pages/Tananyag'
 import ProbaZH from './pages/ProbaZH'
 import Profil from './pages/Profil'
+import Bejelentkezes from './pages/Bejelentkezes'
+import Regisztracio from './pages/Regisztracio'
 
 
 
@@ -16,6 +18,8 @@ function App(){
       <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />}/>
+        <Route path="regisztracio" element={<Regisztracio />}/>
+        <Route path="bejelentkezes" element={<Bejelentkezes />}/>
         <Route path="tananyag" element={<Tananyag />}/>
         <Route path="probazh" element={<ProbaZH />}/>
         <Route path="profil" element={<Profil />}/>
