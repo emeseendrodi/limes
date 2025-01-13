@@ -9,6 +9,9 @@ export default function Bejelentkezes(){
                 <form className="regist-form">
                     <input type="email" placeholder="Email cím"  className="regist-form-el"/>
                     <input type="password" placeholder="Jelszó"  className="regist-form-el"/>
+                    
+
+                    <button type="submit" className="form-submit">Bejelentkezés</button>
                 </form>
 
                 <h3>Még nincs fiókod?<br></br> Regisztrálj itt!</h3>

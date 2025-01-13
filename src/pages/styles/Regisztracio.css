@@ -10,6 +10,11 @@
     text-align: center;
 }
 
+.regist-box h1{
+    padding: 0;
+    margin: 10px;
+}
+
 .regist-form{
     display: flex;
     flex-direction: column;
@@ -19,7 +24,7 @@
 .regist-form-el{
     border-radius: 20px;
     margin: 10px 0;
-    padding: 10px 60px;
+    padding: 10px 30px;
     border: none;
     outline: none;
     background-color: #D9D9D9;
@@ -34,6 +39,24 @@
     font-size: medium;
     margin-top: 10px;
     font-style: italic;
+}
+
+.form-submit{
+    display: inline;
+    align-self: center;
+    padding: 10px 40px;
+
+    margin-top: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 20px;
+
+    border: NONE;
+}
+
+.form-submit:hover{
+    background-color: #D9D9D9;
 }
 
 

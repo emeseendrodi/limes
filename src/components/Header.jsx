@@ -27,8 +27,8 @@ export default function Header() {
     return (
         <header>
             <div className="images">
-                <img src="public/pte-logo.png" className="pte-logo" />
-                <Link to="/"><img src="public/limes-logo.png" className="limes-logo" /></Link>
+                <img src="/pte-logo.png" className="pte-logo" />
+                <Link to="/"><img src="/limes-logo.png" className="limes-logo" /></Link>
             </div>
 
            
