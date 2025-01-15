@@ -8,8 +8,10 @@ import Tananyag from './pages/Tananyag'
 import ProbaZH from './pages/ProbaZH'
 import Profil from './pages/Profil'
 import Bejelentkezes from './pages/Bejelentkezes'
+import ErrorPage from './pages/ErrorPage'
 import Regisztracio from './pages/Regisztracio'
-
+import Feladat from './pages/Feladat'
+import TananyagLayout from './components/TananyagLayout'
 
 
 function App(){
@@ -20,9 +22,15 @@ function App(){
         <Route index element={<Home />}/>
         <Route path="regisztracio" element={<Regisztracio />}/>
         <Route path="bejelentkezes" element={<Bejelentkezes />}/>
-        <Route path="tananyag" element={<Tananyag />}/>
+
+        <Route path="tananyag" element={<TananyagLayout />}>
+                        <Route index element={<Tananyag />} />
+                        <Route path="feladat" element={<Feladat />} />
+        </Route>
+
         <Route path="probazh" element={<ProbaZH />}/>
         <Route path="profil" element={<Profil />}/>
+        <Route path="hiba" element={<ErrorPage />}/>
       </Route>
       </Routes>
     </BrowserRouter>

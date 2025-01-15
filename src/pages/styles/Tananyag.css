@@ -1,31 +1,78 @@
-.tananyag-box{
-    background-color: #09224C;
+.tananyag-box {
+    background-color: #09224c;
     opacity: 80%;
     color: white;
-    
-
     margin: 20px 10px;
     padding: 10px 20px;
-
     border-radius: 20px;
-    
-}
-
-.tananyag-box ul{
+  }
+  
+  .tananyag-box a {
+    text-decoration: none;
+    color: white;
+  }
+  
+  .tananyag-box a:hover {
+    text-decoration: underline;
+  }
+  
+  .tananyag-box ul {
     list-style: none;
-    
-}
-
-.tananyag-box h2{
+    margin: 0;
+    padding: 0;
+  }
+  
+  .tananyag-box h2 {
     font-weight: 500;
-}
+    font-size: 1.2rem;
+  }
+  .week {
+    padding: 30px;
+    border-radius: 8px;
+    margin-bottom: 10px;
 
-
-@media (min-width: 768px) {
-
-    .tananyag-box{
-        width: 70vw;
-        margin: 20px auto;
+  }
+  
+  .week-1 {
+    background-color: #2a3d5d;  
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .week-2 {
+    background-color: #3b4f74;  
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .week-3 {
+    background-color: #4c6b93;  
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .week-4 {
+    background-color: #5e88b2;  
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .week h3 {
+    text-align: center; /* Középre igazítja a hétneveket */
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    border-bottom: 2px solid;
+  }
+  
+  @media (min-width: 768px) {
+    .tananyag-box {
+      width: 70vw;
+      margin: 20px auto;
     }
-    
-}
+  }
+  

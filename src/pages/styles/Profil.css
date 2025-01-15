@@ -3,6 +3,7 @@
     flex-direction: column;
     align-items: center;
     color: white;
+    
 }
 
 .profil--hero-section h2{
@@ -17,18 +18,20 @@
     font-weight: 600;
 }
 
-.profil--data{
-    background-color: #008776;
-}
 
-.profil--progression{
-    background-color: #09224C;
-}
+    .profil--data {
+        background-color: rgba(0, 135, 118, 0.8); /* 80% opacity */
+    }
+    
+    .profil--progression {
+        background-color: rgba(9, 34, 76, 0.8); /* 80% opacity */
+    }
 
 .profil--data, .profil--progression{
     margin: 20px;
     padding: 20px;
     width: 70vw;
+    border-radius: 20px;
 }
 
 .profil--el{
@@ -36,7 +39,7 @@
     color: rgb(61, 61, 61);
     padding: 10px;
     margin: 8px 0;
-
+    
     font-weight: 400;
 
     border-radius: 20px;
@@ -44,6 +47,7 @@
 
 .profil--el ul{
     list-style: none;
+    
 }
 
 

@@ -1,16 +1,63 @@
 import React from "react";
 import "./styles/Regisztracio.css"
 
+
 export default function Regisztracio(){
+
+    const [firstName, setFirstName] = React.useState('');
+    const [lastName, setLastName] = React.useState('');
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
+   
+
+
+    const handleRegistration = async (e) => {
+        e.preventDefault()
+        const userData = {
+            firstName,
+            lastName,
+            email,
+            password
+        };
+
+        console.log(userData)
+
+    };
+
+
     return(
         <>
             <div className="regist-box">
                 <h1>Regisztráció</h1>
-                <form className="regist-form">
-                    <input type="text" placeholder="Vezetéknév"  className="regist-form-el"/>
-                    <input type="text" placeholder="Keresztnév"  className="regist-form-el" />
-                    <input type="email" placeholder="Email cím"  className="regist-form-el"/>
-                    <input type="password" placeholder="Jelszó"  className="regist-form-el"/>
+                <form className="regist-form" onSubmit={handleRegistration}>
+
+                    <input 
+                     required
+                     type="text"
+                     placeholder="Vezetéknév" 
+                     onChange={(e) => setLastName(e.target.value)} 
+                     className="regist-form-el"/>
+
+                    <input
+                    required 
+                    type="text" 
+                    placeholder="Keresztnév"  
+                    onChange={(e) => setFirstName(e.target.value)} 
+                    className="regist-form-el" />
+
+                    <input
+                    required 
+                    type="email" 
+                    placeholder="Email cím" onChange={(e) => setEmail(e.target.value)} 
+                    className="regist-form-el"/>
+
+                    <input
+                    required 
+                    type="password" 
+                    placeholder="Jelszó"
+                    minLength={8}  
+                    onChange={(e) => setPassword(e.target.value)} 
+                    className="regist-form-el"/>
 
                     <button type="submit" className="form-submit">Regisztráció</button>
                 </form>
