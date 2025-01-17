@@ -1,5 +1,6 @@
 import React from "react";
 import "./styles/Regisztracio.css"
+import { Link } from "react-router-dom";
 
 export default function Bejelentkezes(){
     return(
@@ -14,7 +15,8 @@ export default function Bejelentkezes(){
                     <button type="submit" className="form-submit">Bejelentkezés</button>
                 </form>
 
-                <h3>Még nincs fiókod?<br></br> Regisztrálj itt!</h3>
+                <h3>Még nincs fiókod?<br></br> 
+                <Link to="../regisztracio">Regisztrálj itt!</Link> </h3>
             </div>
         </>
     )

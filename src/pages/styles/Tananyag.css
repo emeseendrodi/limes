@@ -62,7 +62,7 @@
   }
   
   .week h3 {
-    text-align: center; /* Középre igazítja a hétneveket */
+    text-align: center; 
     font-size: 1.4rem;
     font-weight: 600;
     margin-bottom: 10px;

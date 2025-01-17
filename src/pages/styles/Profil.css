@@ -3,14 +3,12 @@
     flex-direction: column;
     align-items: center;
     color: white;
-    
 }
 
 .profil--hero-section h2{
-    margin:0;
+    margin: 0;
     margin-bottom: 15px;
     border-bottom: 2px solid white;
-
 }
 
 .profil--hero-section p{
@@ -18,20 +16,19 @@
     font-weight: 600;
 }
 
+.profil--data {
+    background-color: rgba(0, 135, 118, 0.8);
+}
 
-    .profil--data {
-        background-color: rgba(0, 135, 118, 0.8); /* 80% opacity */
-    }
-    
-    .profil--progression {
-        background-color: rgba(9, 34, 76, 0.8); /* 80% opacity */
-    }
+.profil--progression {
+    background-color: rgba(9, 34, 76, 0.8);
+}
 
 .profil--data, .profil--progression{
     margin: 20px;
     padding: 20px;
     width: 70vw;
-    border-radius: 20px;
+    border-radius: 10px;
 }
 
 .profil--el{
@@ -39,39 +36,64 @@
     color: rgb(61, 61, 61);
     padding: 10px;
     margin: 8px 0;
-    
     font-weight: 400;
-
     border-radius: 20px;
 }
 
 .profil--el ul{
     list-style: none;
-    
 }
 
+
+.weeks-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.week-item {
+    padding: 8px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: #3d3d3d;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.week-item.completed {
+    background-color:rgba(0, 135, 118, 0.8);
+    color: white;
+}
+
+.exams-list {
+    padding: 0;
+    margin: 10px 0 0 0;
+    display: flex;
+    justify-content: start;
+}
+
+.exam-item {
+    padding: 10px 20px;
+    margin-right: 8px;
+    
+    background-color: rgba(255, 255, 255, 0.5);
+    color: #3d3d3d;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    list-style: none;
+}
+
+.exam-item.completed {
+    background-color: rgba(0, 135, 118, 0.8);
+    color: white;
+}
 
 @media (min-width: 801px) {
     .profil--hero-section{
-        display: flex;
         flex-direction: row;
         margin: 0 auto;
         align-items: start;
-        color: white;
         width: 90%;
     }
-
-    .profil--data{
-        background-color: #008776;
-        display: flex;
-        flex-direction: column;
-        
-    }
-
-
-    
 }
-
-
-
-

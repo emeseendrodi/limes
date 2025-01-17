@@ -1,71 +1,138 @@
-.regist-box{
-    background-color: rgba(0, 135, 118, 0.8);
+.regist-box {
+    background: linear-gradient(135deg, rgba(0, 135, 118, 0.9), rgba(0, 155, 138, 0.8));
     width: 70vw;
-    height: 70vh;
+    height: auto;
+    min-height: 70vh;
     display: flex;
     flex-direction: column;
     margin: 30px auto;
     border-radius: 30px;
     color: white;
     text-align: center;
+    padding: 2rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
 }
 
-.regist-box h1{
+.regist-box h1 {
     padding: 0;
-    margin: 10px;
+    margin: 0 0 1.5rem 0;
+    font-size: 2.5rem;
+    font-weight: 600;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.regist-form{
+.regist-form {
     display: flex;
     flex-direction: column;
-    margin: 0 2em;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 400px;
 }
 
-.regist-form-el{
-    border-radius: 20px;
-    margin: 10px 0;
-    padding: 10px 30px;
-    border: none;
+.regist-form-el {
+    border-radius: 15px;
+    margin: 12px 0;
+    padding: 15px 25px;
+    border: 2px solid transparent;
     outline: none;
-    background-color: #D9D9D9;
+    background-color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    transition: all 0.3s ease;
 }
 
-.regist-box h1{
-    font-weight: 500;
+.regist-form-el:focus {
+    border-color: #005c51;
+    background-color: white;
+    box-shadow: 0 0 0 4px rgba(0, 135, 118, 0.2);
 }
 
-.regist-box h3{
-    font-weight: 300;
-    font-size: medium;
-    margin-top: 10px;
+.regist-form-el::placeholder {
+    color: #666;
+}
+
+.regist-box h3 {
+    font-weight: 400;
+    font-size: 1rem;
+    margin-top: 1.5rem;
     font-style: italic;
+    color: rgba(255, 255, 255, 0.9);
 }
 
-.form-submit{
-    display: inline;
-    align-self: center;
-    padding: 10px 40px;
-
-    margin-top: 10px;
+.regist-box h3 a {
+    color: white;
+    text-decoration: none;
     font-weight: 600;
-    color: #3f3f3f;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+}
+
+.regist-box h3 a:hover {
+    border-bottom-color: white;
+}
+
+.form-submit {
+    display: inline-block;
+    align-self: center;
+    padding: 15px 50px;
+    margin-top: 20px;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #008776;
     text-transform: uppercase;
     cursor: pointer;
-    border-radius: 20px;
-
-    border: NONE;
+    border-radius: 25px;
+    border: none;
+    background: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.form-submit:hover{
-    background-color: #D9D9D9;
+.form-submit:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
 
-
-
+.form-submit:active {
+    transform: translateY(0);
+}
 
 @media (min-width: 768px) {
-    .regist-box{
+    .regist-box {
         width: 30vw;
-        height: 70vh; 
+        min-height: 70vh;
+        padding: 3rem;
+    }
+    
+    .regist-form-el {
+        padding: 15px 30px;
     }
 }
+
+/* Animációk az elemeknek */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.regist-box {
+    animation: fadeIn 0.6s ease-out;
+}
+
+.regist-form-el {
+    animation: fadeIn 0.6s ease-out;
+    animation-fill-mode: both;
+}
+
+/* Késleltetett animáció minden következő input mezőnek */
+.regist-form-el:nth-child(1) { animation-delay: 0.1s; }
+.regist-form-el:nth-child(2) { animation-delay: 0.2s; }
+.regist-form-el:nth-child(3) { animation-delay: 0.3s; }
+.regist-form-el:nth-child(4) { animation-delay: 0.4s; }

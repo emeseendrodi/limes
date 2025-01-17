@@ -13,14 +13,18 @@ export default function Home(){
                     <h2>Gyakorolj minden héten!</h2>
                 </div>
    
-            <div className="home--userlogin">
-                <div className="home--login">
-                    <Link className="home--link" to="/regisztracio">Regisztráció</Link>
-                </div>
+            <div className="home--login">
+            <Link className="home--link" to="/regisztracio"> 
+                    <div className="home--login-button">
+                        Regisztráció
+                    </div>
+                </Link>
 
-                <div className="home--login">
-                  <Link className="home--link" to="/bejelentkezes">Bejelentkezés</Link>
-                </div>
+                <Link className="home--link" to="/bejelentkezes">
+                    <div className="home--login-button">
+                    Bejelentkezés
+                    </div>
+                </Link>
             </div>
                 
             </div>

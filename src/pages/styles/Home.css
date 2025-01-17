@@ -28,12 +28,12 @@
     font-weight: 500;
 }
 
-.home--userlogin{
+.home--login{
     display: flex;
     flex-direction: column;
 }
 
-.home--login{
+.home--login-button{
     background-color: #008776;
     color: white;
     text-align: center;
@@ -45,6 +45,11 @@
     font-weight: 500;
 
     margin: 1em 2em;
+}
+
+.home--login-button:hover{
+    opacity: 70%;
+    cursor: pointer;
 }
 
 .home--link{

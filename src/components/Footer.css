@@ -1,13 +1,13 @@
-/* Footer */
+
 footer {
     background-color: grey;
     color: white;
     text-align: center;
     padding: 10px;
-    margin-top: auto; /* Ez biztosítja, hogy a footer mindig az oldal alján legyen */
+    margin-top: auto;
 }
 
-/* Például, ha van egyéb stílus, akkor a footer tartalma */
+
 footer p {
     margin: 0;
     padding: 0;

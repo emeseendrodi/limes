@@ -1,5 +1,6 @@
 import React from "react";
 import "./styles/Regisztracio.css"
+import { Link } from "react-router-dom";
 
 
 export default function Regisztracio(){
@@ -63,7 +64,7 @@ export default function Regisztracio(){
                 </form>
 
                 <h3>Már van fiókod? <br></br>
-                Jelentkezz be itt!</h3>
+                <Link to="../bejelentkezes" >Jelentkezz be itt!</Link></h3>
             </div>
         </>
     )
