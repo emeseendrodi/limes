@@ -38,7 +38,7 @@
     color: white;
     text-align: center;
     border-radius: 20px;
-
+    
     padding: 15px 30px;
 
     text-transform: uppercase;
@@ -50,6 +50,7 @@
 .home--login-button:hover{
     opacity: 70%;
     cursor: pointer;
+    transform: translateY(-2px);
 }
 
 .home--link{
