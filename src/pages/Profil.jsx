@@ -42,8 +42,7 @@ export default function Profil() {
                 <div className="profil--el">
                     <p>endrodi.emese@gmail.com</p>
                 </div>
-
-                {/* Logout button */}
+                
             <div >
                 <button className="profil--logout" onClick={handleLogout}>
                     Kijelentkezés
