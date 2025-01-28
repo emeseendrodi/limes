@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom"; 
+import  AuthContext from "../context/AuthContext"; 
 import "./styles/Profil.css";
 
 export default function Profil() {
+    const navigate = useNavigate(); 
+    const { logout } = useContext(AuthContext); 
+
     const weeks = Array.from({ length: 12 }, (_, i) => ({
         week: i + 1,
         completed: i < 2,
@@ -12,6 +17,11 @@ export default function Profil() {
         { id: 2, name: "2. zh", completed: false },
         { id: 3, name: "Összetett zh", completed: false }
     ];
+
+    const handleLogout = () => {
+        logout(); 
+        navigate("/"); 
+    };
 
     return (
         <div className="profil--hero-section">
@@ -32,6 +42,13 @@ export default function Profil() {
                 <div className="profil--el">
                     <p>endrodi.emese@gmail.com</p>
                 </div>
+
+                {/* Logout button */}
+            <div >
+                <button className="profil--logout" onClick={handleLogout}>
+                    Kijelentkezés
+                </button>
+            </div>
             </div>
 
             <div className="profil--progression">
@@ -65,6 +82,8 @@ export default function Profil() {
                     </ul>
                 </div>
             </div>
+
+            
         </div>
     );
 }

@@ -89,6 +89,23 @@
     color: white;
 }
 
+.profil--logout {
+    display: inline-block;
+    align-self: center;
+    padding: 15px 50px;
+    margin-top: 20px;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #008776;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 25px;
+    border: none;
+    background: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
 @media (min-width: 801px) {
     .profil--hero-section{
         flex-direction: row;
