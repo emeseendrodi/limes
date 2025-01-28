@@ -1,29 +1,34 @@
 import React from "react";
 import "./styles/Regisztracio.css"
 import { Link } from "react-router-dom";
+import axios from 'axios';
 
 
 export default function Regisztracio(){
 
-    const [firstName, setFirstName] = React.useState('');
-    const [lastName, setLastName] = React.useState('');
+    const [forename, setForeName] = React.useState('');
+    const [surename, setSureName] = React.useState('');
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
    
-
-
     const handleRegistration = async (e) => {
         e.preventDefault()
-        const userData = {
-            firstName,
-            lastName,
+        try {
+          const userData = {
+            forename,
+            surename,
             email,
             password
-        };
+          };
+    
+          const response = await axios.post('/api/student/register', userData);
+          console.log('User registered:', response.data);
+    
+        } catch (error) {
+          console.error('Registration error:', error);
+        }
+      };
 
-        console.log(userData)
-
-    };
 
 
     return(
@@ -36,20 +41,21 @@ export default function Regisztracio(){
                      required
                      type="text"
                      placeholder="Vezetéknév" 
-                     onChange={(e) => setLastName(e.target.value)} 
+                     onChange={(e) => setSureName(e.target.value)} 
                      className="regist-form-el"/>
 
                     <input
                     required 
                     type="text" 
                     placeholder="Keresztnév"  
-                    onChange={(e) => setFirstName(e.target.value)} 
+                    onChange={(e) => setForeName(e.target.value)} 
                     className="regist-form-el" />
 
                     <input
                     required 
                     type="email" 
-                    placeholder="Email cím" onChange={(e) => setEmail(e.target.value)} 
+                    placeholder="Email cím" 
+                    onChange={(e) => setEmail(e.target.value)} 
                     className="regist-form-el"/>
 
                     <input
