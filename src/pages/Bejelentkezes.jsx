@@ -23,7 +23,7 @@ export default function Bejelentkezes() {
         setIsLoggingIn(true);
         setTimeout(() => {
           navigate('/profil'); 
-        }, 3000);
+        }, 2000);
       } else {
         setErrorMessage(response.data.message || 'Hibás bejelentkezési adatok.');
       }

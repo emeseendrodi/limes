@@ -1,43 +1,51 @@
-import React from "react";
-import "./styles/Tananyag.css";
+import React, { useState, useEffect, useContext } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
+import "./styles/Tananyag.css";
 
 export default function Tananyag() {
+  const [lectures, setLectures] = useState([]);
+  const { userEmail } = useContext(AuthContext); 
+
+  useEffect(() => {
+    const fetchLectures = async () => {
+      if (userEmail) { 
+        try {
+          const response = await axios.get("/api/lecture/overview", {
+            params: { email: userEmail }, 
+          });
+          setLectures(response.data); 
+        } catch (error) {
+          console.error("Hiba történt az előadások lekérésekor:", error);
+        }
+      } else {
+        console.error("Nincs bejelentkezett felhasználó (email)");
+      }
+    };
+
+    fetchLectures();
+  }, [userEmail]); 
+
   return (
     <div className="tananyag-box">
       <ul>
-        <li>
-          
-        </li>
-        <li>
-          <div className="week week-1">
-            <h3>1. hét</h3>
-            <Link to="feladat">
-            <h2>1. téma: Számhalmazok tulajdonságai</h2>
-          </Link>
-            <Link to="feladat">
-              <h2>2. téma: Nevetetes sorozatok</h2>
-            </Link>
-          </div>
-        </li>
-        <li>
-          <div className="week week-2">
-            <h3>2. hét</h3>
-            <h2>3. téma: Sorozatok határértéke, végtelen sorok</h2>
-          </div>
-        </li>
-        <li>
-          <div className="week week-3">
-            <h3>3. hét</h3>
-            <h2>4. téma: Végtelen sorozatok és konvergenciájuk</h2>
-          </div>
-        </li>
-        <li>
-          <div className="week week-4">
-            <h3>4. hét</h3>
-            <h2>5. téma: Matematikai indukció</h2>
-          </div>
-        </li>
+        {lectures.length === 0 ? (
+          <li>Nincs elérhető tananyag.</li>
+        ) : (
+          lectures.map((week) => (
+            <li key={week.weekTitle}>
+              <div className="week">
+                <h3>{week.weekTitle}</h3>
+                {week.weekylLecture.map((lecture) => (
+                  <Link to={`feladat/${lecture.weeklyLectureId}`} key={lecture.weeklyLectureId}>
+                    <h2>{lecture.weeklyLectureTitle}</h2>
+                  </Link>
+                ))}
+              </div>
+            </li>
+          ))
+        )}
       </ul>
     </div>
   );

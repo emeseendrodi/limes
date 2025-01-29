@@ -6,5 +6,5 @@ import AuthContext from '../context/AuthContext';
 
 export default function ProtectedRoute(){
     const { userEmail } = useContext(AuthContext);
-    return userEmail ? <Outlet /> : <Navigate to="/bejelentkezes" />;
+    return userEmail ? <Outlet /> : <Navigate to="/" />;
 }
