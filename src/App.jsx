@@ -6,10 +6,10 @@ import Tananyag from './pages/Tananyag';
 import ProbaZH from './pages/ProbaZH';
 import Profil from './pages/Profil';
 import Bejelentkezes from './pages/Bejelentkezes';
-import ErrorPage from './pages/ErrorPage';
 import Regisztracio from './pages/Regisztracio';
 import Feladat from './pages/Feladat';
 import TananyagLayout from './components/TananyagLayout';
+import ProtectedRoute from './components/ProtectedRoute';
 
 export default function App() {
   return (
@@ -21,14 +21,21 @@ export default function App() {
             <Route path="regisztracio" element={<Regisztracio />} />
             <Route path="bejelentkezes" element={<Bejelentkezes />} />
 
-            <Route path="tananyag" element={<TananyagLayout />}>
-              <Route index element={<Tananyag />} />
-              <Route path="feladat" element={<Feladat />} />
+        
+            <Route element={<ProtectedRoute />}>
+              <Route path="tananyag" element={<TananyagLayout />}>
+                <Route index element={<Tananyag />} />
+                <Route path="feladat" element={<Feladat />} />
+              </Route>
+
+              <Route path="probazh" element={<ProbaZH />} />
+              <Route path="profil" element={<Profil />} />
             </Route>
 
-            <Route path="probazh" element={<ProbaZH />} />
-            <Route path="profil" element={<Profil />} />
-            <Route path="hiba" element={<ErrorPage />} />
+
+
+
+            
           </Route>
         </Routes>
       </BrowserRouter>
