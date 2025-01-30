@@ -8,15 +8,20 @@
     border-radius: 20px;
     padding: 2%;
     width: 70%;
-    min-height: 60vh;
+    height: fit-content;
     
     margin: 20px auto;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
 }
 
+.feladat-box h1, h3{
+    margin: 0;
+}
+
 
 .svg-container {
+    display: block;
    height: fit-content;
 }
 
@@ -63,12 +68,11 @@
 
 
 .navigation-buttons {
-    position: absolute;
-    bottom: 20px;
     width: 90%;
     display: flex;
     justify-content: space-between;
     padding: 0 20px;
+    margin-top: auto;
 }
 
 

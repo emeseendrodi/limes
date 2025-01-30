@@ -1,48 +1,172 @@
-import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState, useEffect, useContext } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import Axios from 'axios';
+import AuthContext from '../context/AuthContext';
+
+function FeladatLeiras({ assignment, currentIndex }) {
+  return (
+    <div>
+      <h3>{currentIndex + 1}. feladat</h3> 
+      <h2>{assignment.assignmentTitle}</h2>
+      <p>{assignment.description}</p>
+      {assignment.picture && (
+        <div
+          key="assignment-picture"
+          dangerouslySetInnerHTML={{ __html: assignment.picture }}
+        />
+      )}
+    </div>
+  );
+}
+
+function Megoldas({ solution }) {
+  return (
+    <div>
+      <h3>{solution.title}</h3>
+      <p>{solution.details}</p>
+      {solution.picture && (
+        <div
+          key="solution-picture"
+          dangerouslySetInnerHTML={{ __html: solution.picture }}
+        />
+      )}
+    </div>
+  );
+}
 
 export default function Dolgozat() {
-    const [email, setEmail] = useState('');
-    const [result, setResult] = useState(null);
-    const [testType, setTestType] = useState('');
-    
-    const location = useLocation();
+  const { testType } = useParams();
+  const navigate = useNavigate();
+  const { userEmail } = useContext(AuthContext);
+  const [assignments, setAssignments] = useState([]);
+  const [currentAssignment, setCurrentAssignment] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentSolutionIndex, setCurrentSolutionIndex] = useState(0);
 
-    useEffect(() => {
-        const queryParams = new URLSearchParams(location.search);
-        setTestType(queryParams.get('testType'));
-    }, [location]);
+  useEffect(() => {
+    if (!testType) return;
 
-    const handleTestSolve = async () => {
-        try {
-            const response = await axios.post('/test/solve', {
-                testType,
-                email,
-            });
-            
-            if (response.data.success) {
-                setResult('Teszt sikeresen megoldva!');
-            } else {
-                setResult('Hiba történt: ' + response.data.message);
-            }
-        } catch (error) {
-            setResult('Hiba történt a szerverrel való kommunikáció során.');
+    Axios.get(`/api/test?testType=${testType}`)
+      .then((response) => {
+        const assignmentIds = response.data;
+        setAssignments(assignmentIds);
+        if (assignmentIds.length > 0) {
+          loadAssignment(assignmentIds[0]);
         }
-    };
+      })
+      .catch((error) => console.error('Hiba a feladatok lekérésénél:', error));
+  }, [testType]);
 
-    return (
-        <div>
-            <h2>{testType} Teszt megoldása</h2>
-            <input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-            />
-            <button onClick={handleTestSolve}>Oldd meg a tesztet</button>
+  const loadAssignment = (assignmentId) => {
+    if (!assignmentId) {
+      console.error('Nincs megadva assignmentId');
+      return;
+    }
 
-            {result && <p>{result}</p>}
-        </div>
-    );
+    Axios.get(`/api/test/assignment?assignmentId=${assignmentId}`)
+      .then((response) => {
+        setCurrentAssignment(response.data);
+        setCurrentSolutionIndex(0);
+      })
+      .catch((error) => console.error('Hiba a feladat lekérésénél:', error));
+  };
+
+  const submitTest = () => {
+    Axios.post('/api/test/solve', {
+      email: userEmail,
+      testType: testType,
+    })
+      .then((response) => {
+        if (response.data.success) {
+          navigate('/probazh');
+        } else {
+          alert(response.data.message || 'Hiba történt a beküldés során!');
+        }
+      })
+      .catch((error) => console.error('Hiba a beküldés során:', error));
+  };
+
+  const nextStep = () => {
+    if (currentSolutionIndex < currentAssignment.solution.length) {
+      setCurrentSolutionIndex(currentSolutionIndex + 1);
+    }
+  };
+
+  const prevStep = () => {
+    if (currentSolutionIndex > 0) {
+      setCurrentSolutionIndex(currentSolutionIndex - 1);
+    }
+  };
+
+  const nextAssignment = () => {
+    if (currentIndex < assignments.length - 1) {
+      const nextIndex = currentIndex + 1;
+      setCurrentIndex(nextIndex);
+      loadAssignment(assignments[nextIndex]);
+    } else {
+      submitTest();
+    }
+  };
+
+  const prevAssignment = () => {
+    if (currentIndex > 0) {
+      const prevIndex = currentIndex - 1;
+      setCurrentIndex(prevIndex);
+      loadAssignment(assignments[prevIndex]);
+    }
+  };
+
+  const renderPrevAssignmentButton = () => (
+    currentIndex > 0 && currentSolutionIndex === 0 ? (
+      <button onClick={prevAssignment}>Előző Feladat</button>
+    ) : null
+  );
+
+  const renderNavigationButtons = () => {
+    if (currentSolutionIndex === 0) {
+      return <button onClick={nextStep}>Megoldás</button>;
+    } else {
+      return (
+        <>
+          <button onClick={prevStep}>Vissza</button>
+          {currentSolutionIndex < currentAssignment.solution.length ? (
+            <button onClick={nextStep}>Tovább</button>
+          ) : (
+            <>
+              {currentIndex < assignments.length - 1 ? (
+                <button onClick={nextAssignment}>Következő Feladat</button>
+              ) : (
+                <button onClick={submitTest}>Befejezés</button>
+              )}
+            </>
+          )}
+        </>
+      );
+    }
+  };
+
+  if (!currentAssignment) {
+    return <div>Betöltés...</div>;
+  }
+
+  const totalSteps = currentAssignment.solution.length + 1;
+  const currentStep = currentSolutionIndex;
+  const progressPercentage = (currentStep / (totalSteps - 1)) * 100;
+
+  return (
+    <div className="feladat-box">
+      <div className="progress-bar" style={{ width: `${progressPercentage}%` }}></div>
+
+      {currentSolutionIndex === 0 ? (
+        <FeladatLeiras assignment={currentAssignment} currentIndex={currentIndex} />
+      ) : (
+        <Megoldas solution={currentAssignment.solution[currentSolutionIndex - 1]} />
+      )}
+
+      <div className="navigation-buttons">
+        {renderPrevAssignmentButton()}
+        {renderNavigationButtons()}
+      </div>
+    </div>
+  );
 }

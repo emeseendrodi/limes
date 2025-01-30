@@ -26,12 +26,11 @@ export default function App() {
               <Route path="tananyag" element={<TananyagLayout />}>
                 <Route index element={<Tananyag />} />
                 <Route path="feladat/:weeklyLectureId" element={<Feladat />} />
-                
               </Route>
 
               <Route path="probazh" element={<ProbaZH />} /> 
               <Route path="profil" element={<Profil />} />
-              <Route path="dolgozat" element={<Dolgozat />} /> 
+              <Route path="dolgozat/:testType" element={<Dolgozat />} />
             </Route>
           </Route>
         </Routes>
