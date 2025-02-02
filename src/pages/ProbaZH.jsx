@@ -6,11 +6,11 @@ import AuthContext from "../context/AuthContext";
 const mapTestTitle = (title) => {
   switch (title) {
     case 'FIRST':
-      return '1. Próbadolgozat';
+      return 'Próbadolgozat I.';
     case 'SECOND':
-      return '2. Próbadolgozat';
+      return 'Próbadolgozat II.';
     case 'LAST':
-      return 'Összetett Próbadolgozat';
+      return 'Összevont Próbadolgozat';
     default:
       return title; 
   }
