@@ -1,137 +1,224 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import "./styles/Feladat.css";
+import React, { useState, useEffect, useContext } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import axios from 'axios';
+import AuthContext from '../context/AuthContext';
+import './styles/Feladat.css';
 
-
-function FeladatLeiras({ feladat }) {
-    return (
-        <div>
-            <h1>{feladat.cim}</h1>
-            <p>{feladat.leiras}</p>
-            
-            <div 
-                className="svg-container" 
-                
-                dangerouslySetInnerHTML={{ __html: feladat.kep }} 
-            />
+function FeladatLeiras({ assignment, currentIndex }) {
+  return (
+    <div>
+      <h3>{currentIndex + 1}. feladat</h3>
+      <h2>{assignment.assignmentTitle}</h2>
+      <p>{assignment.description}</p>
+      {assignment.picture && (
+        <div
+          key="assignment-picture"
+          className="svg-container"
+          dangerouslySetInnerHTML={{ __html: assignment.picture }}
+        />
+      )}
     </div>
-    );
+  );
 }
 
-function Megoldas({ megoldas }) {
-    return (
-        <div>
-            <h2>{megoldas.cim}</h2>
-            <p>{megoldas.reszletek}</p>
-           
-        </div>
-    );
+function Megoldas({ solution }) {
+  return (
+    <div>
+      <h3>{solution.title}</h3>
+      <p>{solution.details}</p>
+      {solution.picture && (
+        <div
+          key="solution-picture"
+          className="svg-container"
+          dangerouslySetInnerHTML={{ __html: solution.picture }}
+        />
+      )}
+    </div>
+  );
 }
 
 export default function Feladat() {
-    const [currentFeladat, setCurrentFeladat] = useState(0);
-    const [currentMegoldas, setCurrentMegoldas] = useState(0);  
+  const { weeklyLectureId } = useParams();
+  const { userEmail } = useContext(AuthContext);
+  const [currentAssignment, setCurrentAssignment] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentSolutionIndex, setCurrentSolutionIndex] = useState(0);
+  const [isCompleted, setIsCompleted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-    const data = [
-        {
-            feladat: {
-                cim: "1. feladat",
-                leiras: "Határozzuk meg az első számhalmaz alsó- és felső határát!",
-                kep: ``
-            },
-            megoldasok: [
-                { cim: "Megoldás 1.1", reszletek: "Első megoldás lépései..." },
-                { cim: "Megoldás 1.2", reszletek: "Második megoldás lépései..." },
-                { cim: "Megoldás 1.3", reszletek: "Harmadik megoldás lépései..." },
-                { cim: "Megoldás 1.4", reszletek: "Negyedik megoldás lépései..." }
-            ]
-        },
-        {
-            feladat: {
-                cim: "2. feladat",
-                leiras: "Határozzuk meg a második számhalmaz alsó- és felső határát!",
-                kep: `<svg>valami</svg>`
-            },
-            megoldasok: [
-                { cim: "Megoldás 2.1", reszletek: "Első megoldás lépései..." },
-                { cim: "Megoldás 2.2", reszletek: "Második megoldás lépései..." }
-            ]
+  const loadAssignment = async (previousId = 0, isCompleted = false) => {
+    try {
+      setIsLoading(true);
+      const response = await axios.get("/api/lecture/nextAssignment", {
+        params: {
+          email: userEmail,
+          weeklyLectureId: parseInt(weeklyLectureId),
+          isWeelkyLectureAllreadyCompleted: isCompleted,
+          previousAssignemntId: previousId
         }
-    ];
+      });
+      
+      if (response.data) {
+        setCurrentAssignment(response.data);
+        setCurrentSolutionIndex(0);
+        setIsCompleted(false);
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error("Hiba történt a feladat lekérésekor:", error);
+      return false;
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-    const feladat = data[currentFeladat];
-    const totalSteps = feladat.megoldasok.length + 1;
-    const currentStep = currentMegoldas === 0 ? 0 : currentMegoldas;
+  const loadPreviousAssignment = async () => {
+    try {
+      setIsLoading(true);
+      const response = await axios.get("/api/lecture/previousAssignment", {
+        params: {
+          email: userEmail,
+          weeklyLectureId: parseInt(weeklyLectureId)
+        }
+      });
+      
+      if (response.data) {
+        setCurrentAssignment(response.data);
+        setCurrentSolutionIndex(0);
+        setCurrentIndex(prev => prev - 1);
+      }
+    } catch (error) {
+      console.error("Hiba történt az előző feladat lekérésekor:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-    const progressPercentage = (currentStep / (totalSteps - 1)) * 100;
-
-    const nextStep = () => {
-        currentMegoldas < feladat.megoldasok.length
-            ? setCurrentMegoldas(currentMegoldas + 1)
-            : null;
-    };
-
-    const prevStep = () => {
-        currentMegoldas > 0
-            ? setCurrentMegoldas(currentMegoldas - 1)
-            : setCurrentMegoldas(0);  
-    };
-
-    const nextFeladat = () => {
-        currentFeladat < data.length - 1
-            ? (setCurrentFeladat(currentFeladat + 1), setCurrentMegoldas(0)) 
-            : null;
-    };
-
-    const prevFeladat = () => {
-        currentFeladat > 0
-            ? (setCurrentFeladat(currentFeladat - 1), setCurrentMegoldas(0)) 
-            : null;
-    };
-
-    const renderPrevFeladatButton = () => (
-        currentFeladat > 0 && currentMegoldas === 0 ? <button onClick={prevFeladat}>Előző Feladat</button> : null
-    );
-
-    const renderNavigationButtons = () => {
-        if (currentMegoldas === 0) {
-            return <button onClick={nextStep}>Megoldás</button>;
+  const submitAssignment = async () => {
+    try {
+      setIsLoading(true);
+      const response = await axios.post("/api/lecture/solveAssignment", {
+        email: userEmail,
+        assignmentId: currentAssignment.assignmentId
+      });
+  
+      console.log("Beküldési válasz:", response.data); 
+  
+      if (response.data.success) {
+        if (response.data.hasNextAssignmentInLecture) {
+          const loadSuccess = await loadAssignment(currentAssignment.assignmentId, true);
+          
+          if (loadSuccess) {
+            setCurrentIndex(prev => prev + 1);
+          } else {
+            console.error("Nem sikerült betölteni a következő feladatot");
+          }
         } else {
-            return (
-                <>
-                    <button onClick={prevStep}>Vissza</button>
-                    {currentMegoldas < feladat.megoldasok.length ? (
-                        <button onClick={nextStep}>Tovább</button>
-                    ) : (
-                        <>
-                            {currentFeladat < data.length - 1 ? (
-                                <button onClick={nextFeladat}>Következő Feladat</button>
-                            ) : (
-                                <Link to="/tananyag">
-                                    <button>Vissza a Tananyaghoz</button>
-                                </Link>
-                            )}
-                        </>
-                    )}
-                </>
-            );
+          setIsCompleted(true);
+          console.log("Nincs több feladat, kész vagy!");
         }
-    };
+      } else {
+        alert(response.data.message || "Hiba történt a beküldés során!");
+      }
+    } catch (error) {
+      console.error("Hiba történt a feladat beküldésekor:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-    return (
-        <div className="feladat-box">
-            <div className="progress-bar" style={{ width: `${progressPercentage}%` }}></div>
+  useEffect(() => {
+    if (userEmail && weeklyLectureId) {
+      loadAssignment();
+    }
+  }, [userEmail, weeklyLectureId]);
 
-            {currentMegoldas === 0 ? (
-                <FeladatLeiras feladat={feladat.feladat} />
-            ) : (
-                <Megoldas megoldas={feladat.megoldasok[currentMegoldas - 1]} />
-            )}
+  const nextStep = () => {
+    if (currentSolutionIndex < currentAssignment.solution.length) {
+      setCurrentSolutionIndex(currentSolutionIndex + 1);
+    }
+  };
 
-            <div className="navigation-buttons">
-                {renderPrevFeladatButton()}
-                {renderNavigationButtons()}
-            </div>
-        </div>
-    );
+  const prevStep = () => {
+    if (currentSolutionIndex > 0) {
+      setCurrentSolutionIndex(currentSolutionIndex - 1);
+    }
+  };
+
+  const renderPrevAssignmentButton = () => (
+    currentIndex > 0 && currentSolutionIndex === 0 ? (
+      <button onClick={loadPreviousAssignment} disabled={isLoading}>
+        Előző Feladat
+      </button>
+    ) : null
+  );
+
+  const renderNavigationButtons = () => {
+    if (currentSolutionIndex === 0) {
+      return (
+        <button onClick={nextStep} disabled={isLoading}>
+          Megoldás
+        </button>
+      );
+    } else {
+      return (
+        <>
+          <button onClick={prevStep} disabled={isLoading}>
+            Vissza
+          </button>
+          {currentSolutionIndex < currentAssignment.solution.length ? (
+            <button onClick={nextStep} disabled={isLoading}>
+              Tovább
+            </button>
+          ) : (
+            <>
+              {!isCompleted ? (
+                <button onClick={submitAssignment} disabled={isLoading}>
+                  {isLoading ? "Betöltés..." : "Következő Feladat"}
+                </button>
+              ) : (
+                <Link to="/tananyag">
+                  <button>Vissza a Tananyaghoz</button>
+                </Link>
+              )}
+            </>
+          )}
+        </>
+      );
+    }
+  };
+
+  if (!currentAssignment || isLoading) {
+    return <div className="feladat-box">Betöltés...</div>;
+  }
+
+  const totalSteps = currentAssignment.solution.length + 1;
+  const currentStep = currentSolutionIndex;
+  const progressPercentage = (currentStep / (totalSteps - 1)) * 100;
+
+  return (
+    <div className="feladat-box">
+      <div 
+        className="progress-bar" 
+        style={{ width: `${progressPercentage}%` }}
+      />
+
+      {currentSolutionIndex === 0 ? (
+        <FeladatLeiras 
+          assignment={currentAssignment} 
+          currentIndex={currentIndex} 
+        />
+      ) : (
+        <Megoldas 
+          solution={currentAssignment.solution[currentSolutionIndex - 1]} 
+        />
+      )}
+
+      <div className="navigation-buttons">
+        {renderPrevAssignmentButton()}
+        {renderNavigationButtons()}
+      </div>
+    </div>
+  );
 }

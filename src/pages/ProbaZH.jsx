@@ -30,10 +30,15 @@ export default function ProbaZH() {
           console.error("API hiba:", error);
         });
     }
-  }, [userEmail]); 
+  }, [userEmail]);
 
   if (!testOverview.length) {
-    return <p>Betöltés...</p>; 
+    return (
+        <div className="tananyag-box">
+          <p>Betöltés...</p>
+        </div>
+   
+  )
   }
 
   return (
@@ -42,9 +47,14 @@ export default function ProbaZH() {
         {testOverview.map((test, index) => (
           <li className="week" key={index}>
             <h3>{mapTestTitle(test.title)}</h3> 
-            {test.isTestCompleted ? (
-              <p>A tesztet már megoldottad!</p>
-            ) : (
+            {test.testCompleted ? 
+            <p>
+                Ezt a tesztet már egyszer megoldottad. 
+                <br />
+                <Link to={`/dolgozat/${test.title}`}>
+                  Ha újra szeretnéd próbálni, kattints ide!
+                </Link>
+              </p> : (
               <Link to={`/dolgozat/${test.title}`}>
                 Oldd meg a tesztet!
               </Link>

@@ -146,7 +146,7 @@ export default function Dolgozat() {
   };
 
   if (!currentAssignment) {
-    return <div>Betöltés...</div>;
+    return <div className='feladat-box'>Betöltés...</div>;
   }
 
   const totalSteps = currentAssignment.solution.length + 1;

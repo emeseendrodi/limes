@@ -1,53 +1,65 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"; 
-import  AuthContext from "../context/AuthContext"; 
+import AuthContext from "../context/AuthContext"; 
 import "./styles/Profil.css";
 
 export default function Profil() {
     const navigate = useNavigate(); 
-    const { logout } = useContext(AuthContext); 
+    const { logout, userEmail } = useContext(AuthContext);  
+    const [profileData, setProfileData] = useState(null);
 
-    const weeks = Array.from({ length: 12 }, (_, i) => ({
-        week: i + 1,
-        completed: i < 2,
-    }));
+    useEffect(() => {
+        const fetchProfileData = async () => {
+            if (!userEmail) return; 
+            try {
+                const response = await fetch(`/api/student/profile?email=${userEmail}`);
+                if (!response.ok) {
+                    throw new Error("Hálózati hiba történt.");
+                }
+                const data = await response.json();
+                setProfileData(data);
+                console.log(data
+                    
+                )
+            } catch (error) {
+                console.error("Hiba a profiladatok betöltésekor:", error);
+            }
+        };
 
-    const exams = [
-        { id: 1, name: "1. zh", completed: true },
-        { id: 2, name: "2. zh", completed: false },
-        { id: 3, name: "Összetett zh", completed: false }
-    ];
+        fetchProfileData();
+    }, [userEmail]);
 
     const handleLogout = () => {
         logout(); 
         navigate("/"); 
     };
 
+    if (!profileData) {
+        return <p>Betöltés...</p>;
+    }
+
     return (
         <div className="profil--hero-section">
             <div className="profil--data">
                 <h2>Személyes adatok</h2>
-                
                 <p>Vezetéknév:</p>
                 <div className="profil--el">
-                    <p>Endrődi</p>
+                    <p>{profileData.surename}</p>
                 </div>
 
                 <p>Keresztnév:</p>
                 <div className="profil--el">
-                    <p>Emese</p>
+                    <p>{profileData.forename}</p>
                 </div>
 
                 <p>Email cím:</p>
                 <div className="profil--el">
-                    <p>endrodi.emese@gmail.com</p>
+                    <p>{profileData.email}</p>
                 </div>
                 
-            <div >
                 <button className="profil--logout" onClick={handleLogout}>
                     Kijelentkezés
                 </button>
-            </div>
             </div>
 
             <div className="profil--progression">
@@ -56,12 +68,12 @@ export default function Profil() {
                 <div className="profil--el">
                     <p>Teljesített hetek:</p>
                     <div className="weeks-grid">
-                        {weeks.map((week) => (
+                        {profileData.progression.completedWeeks.map((week, index) => (
                             <div
-                                key={week.week}
+                                key={index}
                                 className={`week-item ${week.completed ? 'completed' : ''}`}
                             >
-                                {week.week}. hét
+                                {week.title}
                             </div>
                         ))}
                     </div>
@@ -70,19 +82,17 @@ export default function Profil() {
                 <div className="profil--el">
                     <p>Teljesített próbadolgozatok</p>
                     <ul className="exams-list">
-                        {exams.map((exam) => (
+                        {profileData.progression.completedTests.map((exam, index) => (
                             <li
-                                key={exam.id}
+                                key={index}
                                 className={`exam-item ${exam.completed ? 'completed' : ''}`}
                             >
-                                {exam.name}
+                                {exam.title}
                             </li>
                         ))}
                     </ul>
                 </div>
             </div>
-
-            
         </div>
     );
 }

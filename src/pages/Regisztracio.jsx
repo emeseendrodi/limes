@@ -5,7 +5,7 @@ import axios from "axios";
 
 export default function Regisztracio() {
     const [forename, setForename] = useState("");
-    const [surname, setSurname] = useState("");
+    const [surename, setSurename] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
@@ -16,15 +16,15 @@ export default function Regisztracio() {
         e.preventDefault();
 
         try {
-            const registerData = { forename, surname, email, password };
+            const registerData = { forename, surename, email, password };
             const response = await axios.post("/api/student/register", registerData);
 
             if (response.data.success) {
                 console.log("Sikeres regisztráció:", response.data);
                 setIsRegistering(true);
                 setTimeout(() => {
-                    navigate("/bejelentkezes"); // Átirányítás a bejelentkezési oldalra
-                }, 2000); // 2 másodperc késleltetés
+                    navigate("/bejelentkezes"); 
+                }, 2000); 
             } else {
                 setErrorMessage(response.data.message || "Hiba történt a regisztráció során.");
             }
@@ -51,16 +51,16 @@ export default function Regisztracio() {
                     <input
                         required
                         type="text"
-                        placeholder="Keresztnév"
-                        onChange={(e) => setForename(e.target.value)}
+                        placeholder="Vezetéknév"
+                        onChange={(e) => setSurename(e.target.value)}
                         className="regist-form-el"
                     />
 
                     <input
                         required
                         type="text"
-                        placeholder="Vezetéknév"
-                        onChange={(e) => setSurname(e.target.value)}
+                        placeholder="Keresztnév"
+                        onChange={(e) => setForename(e.target.value)}
                         className="regist-form-el"
                     />
 
