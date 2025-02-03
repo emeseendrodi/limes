@@ -1,28 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import AuthContext from './AuthContext'; 
+import AuthContext from './AuthContext';
 
 export const AuthProvider = ({ children }) => {
-  const [userEmail, setUserEmail] = useState(null);
+  const [token, setToken] = useState(null);
 
   useEffect(() => {
-    const storedEmail = localStorage.getItem('userEmail');
-    if (storedEmail) {
-      setUserEmail(storedEmail);
+    const storedToken = localStorage.getItem('jwtToken');
+    if (storedToken) {
+      setToken(storedToken);
     }
   }, []);
 
-  const login = (email) => {
-    setUserEmail(email);
-    localStorage.setItem('userEmail', email); 
+  const login = (jwtToken) => {
+    setToken(jwtToken);
+    localStorage.setItem('jwtToken', jwtToken); 
   };
 
   const logout = () => {
-    setUserEmail(null);
-    localStorage.removeItem('userEmail'); 
+    setToken(null);
+    localStorage.removeItem('jwtToken'); 
   };
 
   return (
-    <AuthContext.Provider value={{ userEmail, login, logout }}>
+    <AuthContext.Provider value={{ token, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

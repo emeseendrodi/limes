@@ -37,16 +37,20 @@ function Megoldas({ solution }) {
 export default function Dolgozat() {
   const { testType } = useParams();
   const navigate = useNavigate();
-  const { userEmail } = useContext(AuthContext);
+  const { token, userEmail } = useContext(AuthContext);
   const [assignments, setAssignments] = useState([]);
   const [currentAssignment, setCurrentAssignment] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentSolutionIndex, setCurrentSolutionIndex] = useState(0);
 
   useEffect(() => {
-    if (!testType) return;
+    if (!testType || !token) return; 
 
-    Axios.get(`/api/test?testType=${testType}`)
+    Axios.get(`/api/test?testType=${testType}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,  
+      },
+    })
       .then((response) => {
         const assignmentIds = response.data;
         setAssignments(assignmentIds);
@@ -55,7 +59,7 @@ export default function Dolgozat() {
         }
       })
       .catch((error) => console.error('Hiba a feladatok lekérésénél:', error));
-  }, [testType]);
+  }, [testType, token]);
 
   const loadAssignment = (assignmentId) => {
     if (!assignmentId) {
@@ -63,7 +67,11 @@ export default function Dolgozat() {
       return;
     }
 
-    Axios.get(`/api/test/assignment?assignmentId=${assignmentId}`)
+    Axios.get(`/api/test/assignment?assignmentId=${assignmentId}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`, 
+      },
+    })
       .then((response) => {
         setCurrentAssignment(response.data);
         setCurrentSolutionIndex(0);
@@ -72,9 +80,15 @@ export default function Dolgozat() {
   };
 
   const submitTest = () => {
+    if (!token) return; 
+
     Axios.post('/api/test/solve', {
       email: userEmail,
       testType: testType,
+    }, {
+      headers: {
+        'Authorization': `Bearer ${token}`,  
+      },
     })
       .then((response) => {
         if (response.data.success) {

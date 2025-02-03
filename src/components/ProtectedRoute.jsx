@@ -1,10 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Navigate, Outlet } from 'react-router-dom';
-import { useContext } from 'react';
 import AuthContext from '../context/AuthContext';
 
-
-export default function ProtectedRoute(){
-    const { userEmail } = useContext(AuthContext);
-    return userEmail ? <Outlet /> : <Navigate to="/" />;
+export default function ProtectedRoute() {
+    const { token } = useContext(AuthContext); 
+    return token ? <Outlet /> : <Navigate to="/" />; 
 }

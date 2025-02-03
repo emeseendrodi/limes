@@ -39,23 +39,26 @@ function Megoldas({ solution }) {
 
 export default function Feladat() {
   const { weeklyLectureId } = useParams();
-  const { userEmail } = useContext(AuthContext);
+  const { token } = useContext(AuthContext); // token nyerése a contextből
   const [currentAssignment, setCurrentAssignment] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentSolutionIndex, setCurrentSolutionIndex] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  // Assignments betöltése
   const loadAssignment = async (previousId = 0, isCompleted = false) => {
     try {
       setIsLoading(true);
       const response = await axios.get("/api/lecture/nextAssignment", {
         params: {
-          email: userEmail,
           weeklyLectureId: parseInt(weeklyLectureId),
           isWeelkyLectureAllreadyCompleted: isCompleted,
           previousAssignemntId: previousId
-        }
+        },
+        headers: {
+          "Authorization": `Bearer ${token}`, // token hozzáadása a headerhez
+        },
       });
       
       if (response.data) {
@@ -73,14 +76,17 @@ export default function Feladat() {
     }
   };
 
+  // Előző feladat betöltése
   const loadPreviousAssignment = async () => {
     try {
       setIsLoading(true);
       const response = await axios.get("/api/lecture/previousAssignment", {
         params: {
-          email: userEmail,
           weeklyLectureId: parseInt(weeklyLectureId)
-        }
+        },
+        headers: {
+          "Authorization": `Bearer ${token}`, // token hozzáadása a headerhez
+        },
       });
       
       if (response.data) {
@@ -95,15 +101,17 @@ export default function Feladat() {
     }
   };
 
+  // Feladat beküldése
   const submitAssignment = async () => {
     try {
       setIsLoading(true);
       const response = await axios.post("/api/lecture/solveAssignment", {
-        email: userEmail,
         assignmentId: currentAssignment.assignmentId
+      }, {
+        headers: {
+          "Authorization": `Bearer ${token}`, // token hozzáadása a headerhez
+        },
       });
-  
-      console.log("Beküldési válasz:", response.data); 
   
       if (response.data.success) {
         if (response.data.hasNextAssignmentInLecture) {
@@ -116,7 +124,6 @@ export default function Feladat() {
           }
         } else {
           setIsCompleted(true);
-          console.log("Nincs több feladat, kész vagy!");
         }
       } else {
         alert(response.data.message || "Hiba történt a beküldés során!");
@@ -128,11 +135,12 @@ export default function Feladat() {
     }
   };
 
+  // loadAssignment meghívása az első feladat betöltéséhez
   useEffect(() => {
-    if (userEmail && weeklyLectureId) {
+    if (token && weeklyLectureId) {
       loadAssignment();
     }
-  }, [userEmail, weeklyLectureId]);
+  }, [token, weeklyLectureId]);
 
   const nextStep = () => {
     if (currentSolutionIndex < currentAssignment.solution.length) {

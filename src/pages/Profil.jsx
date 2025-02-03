@@ -5,29 +5,30 @@ import "./styles/Profil.css";
 
 export default function Profil() {
     const navigate = useNavigate(); 
-    const { logout, userEmail } = useContext(AuthContext);  
+    const { logout, token } = useContext(AuthContext);  // Token használata a userEmail helyett
     const [profileData, setProfileData] = useState(null);
 
     useEffect(() => {
         const fetchProfileData = async () => {
-            if (!userEmail) return; 
             try {
-                const response = await fetch(`/api/student/profile?email=${userEmail}`);
+                const response = await fetch(`/api/student/profile`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,  // Token átadása az API kérésben
+                    }
+                });
                 if (!response.ok) {
                     throw new Error("Hálózati hiba történt.");
                 }
                 const data = await response.json();
                 setProfileData(data);
-                console.log(data
-                    
-                )
             } catch (error) {
                 console.error("Hiba a profiladatok betöltésekor:", error);
             }
         };
 
         fetchProfileData();
-    }, [userEmail]);
+    }, [token]);  // A token változásakor újra lefut
 
     const handleLogout = () => {
         logout(); 

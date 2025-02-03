@@ -3,14 +3,14 @@ import { AuthProvider } from './context/AuthProvider';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Tananyag from './pages/Tananyag';
-import ProbaZH from './pages/ProbaZH'; // ProbaZH oldal importálása
+import ProbaZH from './pages/ProbaZH'; 
 import Profil from './pages/Profil';
 import Bejelentkezes from './pages/Bejelentkezes';
 import Regisztracio from './pages/Regisztracio';
 import Feladat from './pages/Feladat';
 import TananyagLayout from './components/TananyagLayout';
 import ProtectedRoute from './components/ProtectedRoute';
-import Dolgozat from './pages/Dolgozat'; // Dolgozat oldal importálása
+import Dolgozat from './pages/Dolgozat'; 
 
 export default function App() {
   return (

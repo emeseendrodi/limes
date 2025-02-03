@@ -6,26 +6,28 @@ import "./styles/Tananyag.css";
 
 export default function Tananyag() {
   const [lectures, setLectures] = useState([]);
-  const { userEmail } = useContext(AuthContext); 
+  const { token } = useContext(AuthContext); 
 
   useEffect(() => {
     const fetchLectures = async () => {
-      if (userEmail) { 
+      if (token) { 
         try {
           const response = await axios.get("/api/lecture/overview", {
-            params: { email: userEmail }, 
+            headers: {
+              "Authorization": `Bearer ${token}`, 
+            },
           });
-          setLectures(response.data); 
+          setLectures(response.data);
         } catch (error) {
           console.error("Hiba történt az előadások lekérésekor:", error);
         }
       } else {
-        console.error("Nincs bejelentkezett felhasználó (email)");
+        console.error("Nincs bejelentkezett felhasználó (token)");
       }
     };
 
     fetchLectures();
-  }, [userEmail]); 
+  }, [token]); 
 
   return (
     <div className="tananyag-box">

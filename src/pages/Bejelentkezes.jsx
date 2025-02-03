@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import AuthContext from '../context/AuthContext'; 
+import AuthContext from '../context/AuthContext';
 
 export default function Bejelentkezes() {
   const [email, setEmail] = useState('');
@@ -9,31 +9,34 @@ export default function Bejelentkezes() {
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const navigate = useNavigate();
-  const { login } = useContext(AuthContext); 
+  const { login } = useContext(AuthContext);
 
   const handleLogin = async (e) => {
     e.preventDefault();
+  
     try {
       const loginData = { email, password };
+  
       const response = await axios.post('/api/student/login', loginData);
-
-      if (response.data.success) {
-        console.log('Sikeres bejelentkezés:', response.data);
-        login(email); 
+  
+      if (response.data.sessionToken) {
+        login(response.data.sessionToken); 
         setIsLoggingIn(true);
+  
         setTimeout(() => {
-          navigate('/profil'); 
+          navigate('/profil');
         }, 2000);
       } else {
-        setErrorMessage(response.data.message || 'Hibás bejelentkezési adatok.');
+        setErrorMessage('Hiba történt a bejelentkezés során. Kérlek próbáld újra.');
       }
     } catch (error) {
-      console.error('Login error:', error);
       setErrorMessage('Hiba történt a bejelentkezés során. Próbáld újra.');
     }
   };
+  
 
   if (isLoggingIn) {
+    console.log("Logging in, please wait...");
     return (
       <div className="regist-box">
         <h1>Sikeres bejelentkezés!</h1>

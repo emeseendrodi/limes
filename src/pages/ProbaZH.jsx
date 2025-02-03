@@ -17,28 +17,29 @@ const mapTestTitle = (title) => {
 };
 
 export default function ProbaZH() {
-  const { userEmail } = useContext(AuthContext); 
+  const { token } = useContext(AuthContext); 
   const [testOverview, setTestOverview] = useState([]); 
 
   useEffect(() => {
-    if (userEmail) {
-      Axios.get(`/api/test/overview?email=${userEmail}`)
-        .then((response) => {
-          setTestOverview(response.data);
-        })
-        .catch((error) => {
-          console.error("API hiba:", error);
-        });
-    }
-  }, [userEmail]);
+    Axios.get(`/api/test/overview`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,  
+      }
+    })
+    .then((response) => {
+      setTestOverview(response.data);
+    })
+    .catch((error) => {
+      console.error("API hiba:", error);
+    });
+  }, [token]);  
 
   if (!testOverview.length) {
     return (
-        <div className="tananyag-box">
-          <p>Betöltés...</p>
-        </div>
-   
-  )
+      <div className="tananyag-box">
+        <p>Betöltés...</p>
+      </div>
+    );
   }
 
   return (
