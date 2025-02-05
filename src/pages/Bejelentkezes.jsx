@@ -33,10 +33,8 @@ export default function Bejelentkezes() {
       setErrorMessage('Hiba történt a bejelentkezés során. Próbáld újra.');
     }
   };
-  
 
   if (isLoggingIn) {
-    console.log("Logging in, please wait...");
     return (
       <div className="regist-box">
         <h1>Sikeres bejelentkezés!</h1>
@@ -48,6 +46,7 @@ export default function Bejelentkezes() {
   return (
     <div className="regist-box">
       <h1>Bejelentkezés</h1>
+
       <form className="regist-form" onSubmit={handleLogin}>
         <input
           required

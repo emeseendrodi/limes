@@ -39,12 +39,13 @@ function Megoldas({ solution }) {
 
 export default function Feladat() {
   const { weeklyLectureId } = useParams();
-  const { token } = useContext(AuthContext); // token nyerése a contextből
+  const { token } = useContext(AuthContext);
   const [currentAssignment, setCurrentAssignment] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentSolutionIndex, setCurrentSolutionIndex] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [hasRemainingAssignments, setHasRemainingAssignments] = useState(0); // New state for remaining assignments
 
   // Assignments betöltése
   const loadAssignment = async (previousId = 0, isCompleted = false) => {
@@ -57,7 +58,7 @@ export default function Feladat() {
           previousAssignemntId: previousId
         },
         headers: {
-          "Authorization": `Bearer ${token}`, // token hozzáadása a headerhez
+          "Authorization": `Bearer ${token}`,
         },
       });
       
@@ -65,6 +66,7 @@ export default function Feladat() {
         setCurrentAssignment(response.data);
         setCurrentSolutionIndex(0);
         setIsCompleted(false);
+        setHasRemainingAssignments(response.data.remainingAssignmentsInLecture); // Set remaining assignments
         return true;
       }
       return false;
@@ -85,7 +87,7 @@ export default function Feladat() {
           weeklyLectureId: parseInt(weeklyLectureId)
         },
         headers: {
-          "Authorization": `Bearer ${token}`, // token hozzáadása a headerhez
+          "Authorization": `Bearer ${token}`,
         },
       });
       
@@ -109,7 +111,7 @@ export default function Feladat() {
         assignmentId: currentAssignment.assignmentId
       }, {
         headers: {
-          "Authorization": `Bearer ${token}`, // token hozzáadása a headerhez
+          "Authorization": `Bearer ${token}`,
         },
       });
   
@@ -181,13 +183,15 @@ export default function Feladat() {
             </button>
           ) : (
             <>
-              {!isCompleted ? (
+              {hasRemainingAssignments > 0 ? (
                 <button onClick={submitAssignment} disabled={isLoading}>
                   {isLoading ? "Betöltés..." : "Következő Feladat"}
                 </button>
               ) : (
                 <Link to="/tananyag">
-                  <button>Vissza a Tananyaghoz</button>
+                  <button onClick={submitAssignment}>
+                    {isLoading ? "Betöltés..." : "Vissza a Tananyaghoz"}
+                  </button>
                 </Link>
               )}
             </>
@@ -211,7 +215,7 @@ export default function Feladat() {
         className="progress-bar" 
         style={{ width: `${progressPercentage}%` }}
       />
-
+      
       {currentSolutionIndex === 0 ? (
         <FeladatLeiras 
           assignment={currentAssignment} 

@@ -8,7 +8,7 @@ import "./Header.css";
 export default function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
     const location = useLocation();
-    const { token } = useContext(AuthContext);  // Módosítottuk sessionToken-ről token-re
+    const { token } = useContext(AuthContext);  
 
     const toggleMenu = () => {
         setMenuOpen((prev) => !prev);
@@ -18,11 +18,6 @@ export default function Header() {
         setMenuOpen(false);
     };
 
-    useEffect(() => {
-        setMenuOpen(false);  // Zárja a menüt, amikor a route változik
-        document.body.style.overflow = menuOpen ? "hidden" : "unset"; // Állítja az overflow-t menü állapotának megfelelően
-    }, [location, menuOpen]); 
-
     return (
         <header>
             <div className="images">
@@ -30,7 +25,7 @@ export default function Header() {
                 <img src="/limes-logo.png" className="limes-logo" alt="Limes logo" />
             </div>
 
-            {token && (  // Használjuk a token-t sessionToken helyett
+            {token && (  
                 <>
                     <FontAwesomeIcon
                         icon={menuOpen ? faTimes : faBars}
@@ -50,7 +45,7 @@ export default function Header() {
                         </NavLink>
                     </nav>
 
-                    {menuOpen && <div className="overlay" onClick={closeMenu}></div>}  {/* Ide került az overlay kód */}
+                    {menuOpen && <div className="overlay" onClick={closeMenu}></div>}  
                 </>
             )}
         </header>
