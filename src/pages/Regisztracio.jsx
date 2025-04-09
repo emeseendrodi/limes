@@ -8,12 +8,18 @@ export default function Regisztracio() {
     const [surename, setSurename] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isChecked, setIsChecked] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-    const [isRegistering, setIsRegistering] = useState(false); 
+    const [isRegistering, setIsRegistering] = useState(false);
     const navigate = useNavigate();
 
     const handleRegister = async (e) => {
         e.preventDefault();
+
+        if (!isChecked) {
+            setErrorMessage("A regisztrációhoz el kell fogadnod az adatkezelési feltételeket.");
+            return;
+        }
 
         try {
             const registerData = { forename, surename, email, password };
@@ -23,8 +29,8 @@ export default function Regisztracio() {
                 console.log("Sikeres regisztráció:", response.data);
                 setIsRegistering(true);
                 setTimeout(() => {
-                    navigate("/bejelentkezes"); 
-                }, 2000); 
+                    navigate("/bejelentkezes");
+                }, 1500);
             } else {
                 setErrorMessage(response.data.message || "Hiba történt a regisztráció során.");
             }
@@ -79,10 +85,21 @@ export default function Regisztracio() {
                         onChange={(e) => setPassword(e.target.value)}
                         className="regist-form-el"
                     />
+                    
+                    <div className="checkbox-container">
+                        <input
+                            type="checkbox"
+                            id="consent"
+                            checked={isChecked}
+                            onChange={() => setIsChecked(!isChecked)}
+                        />
+                        <label htmlFor="consent">Beleegyezek az adataim eltárolásába.</label>
+                        
+                    </div>
 
                     {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-                    <button type="submit" className="form-submit">Regisztrálj</button>
+                    <button type="submit" className="form-submit" disabled={!isChecked} style={{ backgroundColor: isChecked ? "white" : "#ccc", cursor: isChecked ? "pointer" : "not-allowed" }}>Regisztrálj</button>
                 </form>
 
                 <h3>

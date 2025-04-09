@@ -11,6 +11,7 @@ export default function Bejelentkezes() {
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
 
+  // Handle login form submission
   const handleLogin = async (e) => {
     e.preventDefault();
   
@@ -25,7 +26,7 @@ export default function Bejelentkezes() {
   
         setTimeout(() => {
           navigate('/profil');
-        }, 2000);
+        }, 1500);
       } else {
         setErrorMessage('Hiba történt a bejelentkezés során. Kérlek próbáld újra.');
       }
@@ -34,6 +35,7 @@ export default function Bejelentkezes() {
     }
   };
 
+  // Show success message when logging in
   if (isLoggingIn) {
     return (
       <div className="regist-box">
@@ -47,6 +49,7 @@ export default function Bejelentkezes() {
     <div className="regist-box">
       <h1>Bejelentkezés</h1>
 
+      {/* Login form */}
       <form className="regist-form" onSubmit={handleLogin}>
         <input
           required
@@ -65,6 +68,8 @@ export default function Bejelentkezes() {
         {errorMessage && <p className="error-message">{errorMessage}</p>}
         <button type="submit" className="form-submit">Bejelentkezés</button>
       </form>
+
+      {/* Registration link */}
       <h3>
         Még nincs fiókod?<br />
         <Link to="../regisztracio">Regisztrálj itt!</Link>

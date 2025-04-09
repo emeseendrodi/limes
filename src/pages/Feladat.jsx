@@ -45,7 +45,7 @@ export default function Feladat() {
   const [currentSolutionIndex, setCurrentSolutionIndex] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [hasRemainingAssignments, setHasRemainingAssignments] = useState(0); // New state for remaining assignments
+  const [RemainingAssignments, setRemainingAssignments] = useState(0); 
 
   // Assignments betöltése
   const loadAssignment = async (previousId = 0, isCompleted = false) => {
@@ -66,7 +66,7 @@ export default function Feladat() {
         setCurrentAssignment(response.data);
         setCurrentSolutionIndex(0);
         setIsCompleted(false);
-        setHasRemainingAssignments(response.data.remainingAssignmentsInLecture); // Set remaining assignments
+        setRemainingAssignments(response.data.remainingAssignmentsInLecture); // Set remaining assignments
         return true;
       }
       return false;
@@ -95,6 +95,7 @@ export default function Feladat() {
         setCurrentAssignment(response.data);
         setCurrentSolutionIndex(0);
         setCurrentIndex(prev => prev - 1);
+        setRemainingAssignments(response.data.remainingAssignmentsInLecture + 1); 
       }
     } catch (error) {
       console.error("Hiba történt az előző feladat lekérésekor:", error);
@@ -183,7 +184,7 @@ export default function Feladat() {
             </button>
           ) : (
             <>
-              {hasRemainingAssignments > 0 ? (
+              {RemainingAssignments > 0 ? (
                 <button onClick={submitAssignment} disabled={isLoading}>
                   {isLoading ? "Betöltés..." : "Következő Feladat"}
                 </button>

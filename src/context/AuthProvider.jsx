@@ -6,6 +6,7 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
 
   useEffect(() => {
+    // Load token from localStorage on startup
     const storedToken = localStorage.getItem("jwtToken");
     if (storedToken) {
       const isExpired = checkTokenExpiration(storedToken);
@@ -18,6 +19,7 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
+  // Check if the token has expired
   const checkTokenExpiration = (token) => {
     try {
       const { exp } = jwtDecode(token);
@@ -27,6 +29,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Schedule automatic logout when the token expires
   const scheduleLogout = (token) => {
     try {
       const { exp } = jwtDecode(token);
@@ -34,7 +37,7 @@ export const AuthProvider = ({ children }) => {
       if (timeUntilExpiry > 0) {
         setTimeout(() => {
           logout();
-          alert("❌ A munkamenet lejárt! Kérlek jelentkezz be újra.");  
+          alert("❌ A munkamenet lejárt! Kérlek jelentkezz be újra.");
         }, timeUntilExpiry);
       }
     } catch (error) {
@@ -42,6 +45,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Handle user login and store the token
   const login = (jwtToken) => {
     if (checkTokenExpiration(jwtToken)) {
       logout();
@@ -52,10 +56,11 @@ export const AuthProvider = ({ children }) => {
     scheduleLogout(jwtToken);
   };
 
+  // Handle user logout and clear token
   const logout = () => {
     setToken(null);
     localStorage.removeItem("jwtToken");
-    window.location.href = "/"; 
+    window.location.href = "/";
   };
 
   return (

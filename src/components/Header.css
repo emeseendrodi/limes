@@ -1,3 +1,5 @@
+/* Header CSS */
+
 header {
     background-color: #09224C;
     height: 11vh;
@@ -33,6 +35,8 @@ header {
     max-width: 150px;
     object-fit: contain;
 }
+
+/* Hamburger menu */
 
 .header-nav {
     display: flex;
@@ -100,7 +104,7 @@ header {
     z-index: 999;
     animation: fadeIn 0.3s ease-in-out;
 }
-
+/* transformation for the nav */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -109,6 +113,8 @@ header {
         opacity: 1;
     }
 }
+
+/*media query for bigger screensize, transforms the nav from hamburger menu to a nav-bar*/
 
 @media (min-width: 768px) {
     .menu-icon {

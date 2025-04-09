@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useLocation, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import AuthContext from "../context/AuthContext"; 
@@ -7,9 +7,9 @@ import "./Header.css";
 
 export default function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
-    const location = useLocation();
     const { token } = useContext(AuthContext);  
 
+    //for small screensizes, there is a hamburger menu witch needs a toggle effect for closing and opening
     const toggleMenu = () => {
         setMenuOpen((prev) => !prev);
     };
@@ -25,7 +25,9 @@ export default function Header() {
                 <img src="/limes-logo.png" className="limes-logo" alt="Limes logo" />
             </div>
 
-            {token && (  
+            
+            {// if the user is authenticated the navbar is shown
+            token && (  
                 <>
                     <FontAwesomeIcon
                         icon={menuOpen ? faTimes : faBars}

@@ -16,6 +16,10 @@
     font-weight: 600;
 }
 
+.loading{
+    text-align: center;
+}
+
 .profil--data {
     background-color: rgba(0, 135, 118, 0.8);
 }
