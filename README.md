@@ -12,25 +12,23 @@ Built with **React** and styled for usability across various devices, the fronte
 
 ### Steps
 
-#1. Clone the repository:
+## Installation Instructions
+1. Clone this repository:
    ```bash
-   git clone https://github.com/emeseendrodi/limes.git
-   cd limes-frontend
 
+   git clone https://github.com/emeseendrodi/limes
+2. Navigate to the project directory:
+    ```bash
 
-   
-#2. Install dependencies:
+    cd limes
 
-  ```bash
+3. Install dependencies:
+    ```bash
+
     npm install
-
-3. Start the development server:
-
+4. Start the development server:
     ```bash
     npm run dev
-
- 4. The app will be available at:
-    http://localhost:5173
 
 
 
