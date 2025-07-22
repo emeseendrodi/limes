@@ -1,14 +1,36 @@
 # Limes – Frontend
 
-This is the frontend of **Limes**, a web-based educational platform designed to help students of the University of Pécs better understand and prepare for the Calculus course. The application provides interactive lessons, example problems, and mock tests in a modern, responsive interface.
+This is the frontend of **Limes**, a web-based educational platform designed to support students of the University of Pécs in learning Calculus. It provides interactive lessons, example problems, and mock exams in a modern, responsive user interface.
 
-The frontend is built using **React** and communicates with the backend via RESTful APIs. The design prioritizes user experience and accessibility across devices.
+Built with **React** and styled for usability across various devices, the frontend communicates with the backend via secure RESTful APIs.
 
-## Features
-- Responsive, modern UI
-- Lesson and assignment viewer
-- Login and registration pages
-- Token-based authentication (JWT)
+## 🔧 Installation
+
+### Prerequisites
+- [Node.js](https://nodejs.org/) (v16+ recommended)
+- npm (comes with Node.js)
+
+### Steps
+
+#1. Clone the repository:
+   ```bash
+   git clone https://github.com/emeseendrodi/limes.git
+   cd limes-frontend
+
+
+   
+#2. Install dependencies:
+
+  ```bash
+    npm install
+
+3. Start the development server:
+
+    ```bash
+    npm run dev
+
+ 4. The app will be available at:
+    http://localhost:5173
 
 
 
