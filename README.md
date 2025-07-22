@@ -1,8 +1,14 @@
-# React + Vite
+# Limes – Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend of **Limes**, a web-based educational platform designed to help students of the University of Pécs better understand and prepare for the Calculus course. The application provides interactive lessons, example problems, and mock tests in a modern, responsive interface.
 
-Currently, two official plugins are available:
+The frontend is built using **React** and communicates with the backend via RESTful APIs. The design prioritizes user experience and accessibility across devices.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
+- Responsive, modern UI
+- Lesson and assignment viewer
+- Login and registration pages
+- Token-based authentication (JWT)
+
+
+
